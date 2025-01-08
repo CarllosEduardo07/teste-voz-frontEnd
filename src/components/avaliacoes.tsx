@@ -33,8 +33,13 @@ export function Avaliacoes() {
         </h2>
 
         <form className='flex flex-col items-end space-y-2'>
+          <input
+            type='text'
+            placeholder='Digite seu Nome'
+            className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg'
+          />
           <textarea
-            className='py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-24 max-h-36 '
+            className='py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-16 max-h-28'
             rows={2}
             cols={50}
             placeholder='Compartilhe sua experiência...'
