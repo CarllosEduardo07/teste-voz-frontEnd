@@ -1,11 +1,14 @@
+import { ComentarioInterface } from '@/interface/ComentariosInterface';
 import { getComentarios } from '@/services/conexao';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function Avaliacoes() {
+  const [comentarios, setComentarios] = useState<ComentarioInterface[]>([]);
+
   useEffect(() => {
     const fetchListComentarios = async () => {
       const fetchedComentarios = await getComentarios();
-      console.log(fetchedComentarios);
+      setComentarios(fetchedComentarios);
     };
 
     fetchListComentarios();
@@ -17,14 +20,18 @@ export function Avaliacoes() {
         Comentários dos Clientes
       </h1>
       {/* comentario */}
-      <section className='flex items-center justify-center'>
-        <article className='w-96 px-6 py-4 space-y-4 rounded-3xl border border-slate-300 shadow-lg'>
-          <p className='text-xl font-semibold'>Carlos Eduardo</p>
-          <p className='text-sm text-slate-600 font-medium'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quis
-            at iusto quasi repudiandae temporibus dicta officiis aut.
-          </p>
-        </article>
+      <section className='flex items-center justify-center space-x-4'>
+        {comentarios.map((comentario, index) => (
+          <article
+            key={comentario.id || index}
+            className='w-96 px-6 py-4 space-y-4 rounded-3xl border border-slate-300 shadow-lg'
+          >
+            <p className='text-xl font-semibold'>{comentario.nome}</p>
+            <p className='text-sm text-slate-600 font-medium'>
+              {comentario.descricao}
+            </p>
+          </article>
+        ))}
       </section>
 
       <article className='flex flex-col items-center'>
