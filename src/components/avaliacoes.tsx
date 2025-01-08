@@ -1,4 +1,16 @@
+import { getComentarios } from '@/services/conexao';
+import { useEffect } from 'react';
+
 export function Avaliacoes() {
+  useEffect(() => {
+    const fetchListComentarios = async () => {
+      const fetchedComentarios = await getComentarios();
+      console.log(fetchedComentarios);
+    };
+
+    fetchListComentarios();
+  }, []);
+
   return (
     <section className='p-5'>
       <h1 className='my-5 text-center text-3xl font-semibold'>
