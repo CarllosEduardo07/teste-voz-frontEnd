@@ -6,17 +6,33 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { ComentarioInterface } from '@/interface/ComentariosInterface';
+import { newComentarioSchema } from '@/interface/ComentariosInterface';
 import { getComentarios } from '@/services/conexao';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+type newComentarioData = z.infer<typeof newComentarioSchema>;
 
 export function Avaliacoes() {
-  const [comentarios, setComentarios] = useState<ComentarioInterface[]>([]);
+  const [comentarios, setComentarios] = useState<newComentarioData[]>([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<newComentarioData>({
+    resolver: zodResolver(newComentarioSchema),
+  });
 
   useEffect(() => {
     const fetchListComentarios = async () => {
-      const fetchedComentarios = await getComentarios();
-      setComentarios(fetchedComentarios);
+      try {
+        const fetchedComentarios = await getComentarios();
+        setComentarios(fetchedComentarios);
+      } catch (error) {
+        console.log('Erro ao pega os dados', error);
+      }
     };
 
     fetchListComentarios();
@@ -61,18 +77,29 @@ export function Avaliacoes() {
           Deixe seu comentário
         </h2>
 
-        <form className='flex flex-col items-end space-y-2'>
+        <form
+          onSubmit={handleSubmit('')}
+          className='flex flex-col items-end space-y-2'
+        >
           <input
             type='text'
             placeholder='Digite seu Nome'
             className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg'
+            {...register('nome')}
           />
+          {errors.nome && <p className='text-red-500'>{errors.nome.message}</p>}
+
           <textarea
             className='py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-16 max-h-28'
             rows={2}
             cols={50}
             placeholder='Compartilhe sua experiência...'
+            {...register('descricao')}
           />
+          {errors.descricao && (
+            <p className='text-red-500'>{errors.descricao.message}</p>
+          )}
+
           <button className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'>
             Enviar
           </button>
