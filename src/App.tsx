@@ -6,7 +6,7 @@ import Footer from "./components/footer/footer";
 
 export default function App() {
   return (
-    <div className="font-inter">
+    <div>
         <NavBar />
         <Carrossel/>
         <Footer/>
