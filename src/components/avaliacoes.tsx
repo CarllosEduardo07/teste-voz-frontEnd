@@ -1,3 +1,11 @@
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import { ComentarioInterface } from '@/interface/ComentariosInterface';
 import { getComentarios } from '@/services/conexao';
 import { useEffect, useState } from 'react';
@@ -20,19 +28,33 @@ export function Avaliacoes() {
         Comentários dos Clientes
       </h1>
       {/* comentario */}
-      <section className='flex items-center justify-center space-x-4'>
-        {comentarios.map((comentario, index) => (
-          <article
-            key={comentario.id || index}
-            className='w-96 px-6 py-4 space-y-4 rounded-3xl border border-slate-300 shadow-lg'
-          >
-            <p className='text-xl font-semibold'>{comentario.nome}</p>
-            <p className='text-sm text-slate-600 font-medium'>
-              {comentario.descricao}
-            </p>
-          </article>
-        ))}
-      </section>
+      <div className='flex items-center justify-center'>
+        <Carousel
+          opts={{
+            align: 'start',
+          }}
+          className='w-full max-w-4xl mx-auto'
+        >
+          <CarouselContent>
+            {comentarios.map((comentario, index) => (
+              <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/3'>
+                <Card className='rounded-3xl h-60'>
+                  <CardContent className='items-center justify-start p-6'>
+                    <div className='text-xl font-semibold'>
+                      <p>{comentario.nome}</p>
+                    </div>
+                    <div className='py-2 pr-5 text-justify text-sm text-slate-600 font-medium break-words whitespace-normal overflow-y-auto max-h-40'>
+                      {comentario.descricao}
+                    </div>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
 
       <article className='flex flex-col items-center'>
         <h2 className='mt-10 text-xl font-semibold mb-3 text-center'>
