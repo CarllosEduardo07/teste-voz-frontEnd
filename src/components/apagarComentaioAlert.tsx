@@ -24,6 +24,9 @@ export const ApagarPostAlert = forwardRef<
   const handleDelete = () => {
     onDelete(); // Chama a função de deletar
   };
+
+
+  
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

@@ -46,14 +46,16 @@ export function Avaliacoes() {
     mode: 'onChange',
   });
 
+
   //create comentario
   const handleCreateComentario = async (data: newComentarioData) => {
-    const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
-
+    
     try {
+      const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
       const response = await createComentarios(validatedData);
 
       const newComentario: newComentarioData = {
+        id: response.id,
         nome: response.nome,
         descricao: response.descricao,
       };
@@ -72,12 +74,16 @@ export function Avaliacoes() {
   const handleEditaComentario = (comentario: newComentarioData) => {
     setEditarComentario(comentario);
     // Atualiza os campos manualmente
+    setValue('id', comentario.id);
     setValue('nome', comentario.nome);
     setValue('descricao', comentario.descricao);
   };
 
   const handleUpdateComentario = async (data: newComentarioData) => {
-    if (!editarComentario?.id) return;
+    if (!editarComentario?.id) {
+      console.log("erro no id" )
+      return
+    };
 
     try {
       const updatedComentario = await updateComentarios({
@@ -178,6 +184,7 @@ export function Avaliacoes() {
                   </DropdownMenu>
                   <CardContent className='items-center justify-start p-6'>
                     <div className='text-xl font-semibold'>
+                      <p>ID: {comentario.id}</p>
                       <p>{comentario.nome}</p>
                     </div>
                     <div className='py-2 pr-5 text-justify text-sm text-slate-600 font-medium break-words whitespace-normal overflow-y-auto max-h-40'>
@@ -206,6 +213,7 @@ export function Avaliacoes() {
           )}
           className='flex flex-col items-end space-y-2'
         >
+          <input type="hidden" {...register('id')} className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg' placeholder='id'/>
           <input
             type='text'
             placeholder='Digite seu Nome'
