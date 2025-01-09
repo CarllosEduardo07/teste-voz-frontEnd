@@ -23,6 +23,7 @@ import {
   createComentarios,
   deleteComentarios,
   getComentarios,
+  updateComentarios,
 } from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FilePenLine } from 'lucide-react';
@@ -31,12 +32,15 @@ import { useForm } from 'react-hook-form';
 
 export function Avaliacoes() {
   const [comentarios, setComentarios] = useState<newComentarioData[]>([]);
+  const [editarComentario, setEditarComentario] =
+    useState<newComentarioData | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<newComentarioData>({
     resolver: zodResolver(newComentarioSchema),
     mode: 'onChange',
@@ -60,6 +64,39 @@ export function Avaliacoes() {
       console.log(`Comentário criado com sucesso!`);
     } catch (error) {
       console.log(`Erro Ao criar o comentario`, error);
+    }
+  };
+
+  // Editar comentario
+  //Função para iniciar a edição
+  const handleEditaComentario = (comentario: newComentarioData) => {
+    setEditarComentario(comentario);
+    // Atualiza os campos manualmente
+    setValue('nome', comentario.nome);
+    setValue('descricao', comentario.descricao);
+  };
+
+  const handleUpdateComentario = async (data: newComentarioData) => {
+    if (!editarComentario?.id) return;
+
+    try {
+      const updatedComentario = await updateComentarios({
+        ...editarComentario,
+        ...data,
+      });
+
+      setComentarios(prevComentarios =>
+        prevComentarios.map(comentario =>
+          comentario.id === updatedComentario.id
+            ? updatedComentario
+            : comentario,
+        ),
+      );
+      setEditarComentario(null); // Finaliza a edição
+      reset();
+      console.log(`Comentário atualizado com sucesso!`);
+    } catch (error) {
+      console.error(`Erro ao atualizar o comentário:`, error);
     }
   };
 
@@ -88,13 +125,17 @@ export function Avaliacoes() {
       try {
         const fetchedComentarios = await getComentarios();
         setComentarios(fetchedComentarios);
+
+        if (!editarComentario) {
+          reset();
+        }
       } catch (error) {
         console.log('Erro ao pega os dados', error);
       }
     };
 
     fetchListComentarios();
-  }, [comentarios]);
+  }, [editarComentario, reset]);
 
   return (
     <section className='p-5'>
@@ -120,7 +161,9 @@ export function Avaliacoes() {
                     <DropdownMenuContent>
                       <DropdownMenuLabel>Opções</DropdownMenuLabel>
                       <DropdownMenuGroup>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleEditaComentario(comentario)}
+                        >
                           <FilePenLine />
                           <span>Editar</span>
                         </DropdownMenuItem>
@@ -156,7 +199,9 @@ export function Avaliacoes() {
         </h2>
 
         <form
-          onSubmit={handleSubmit(handleCreateComentario)}
+          onSubmit={handleSubmit(
+            editarComentario ? handleUpdateComentario : handleCreateComentario,
+          )}
           className='flex flex-col items-end space-y-2'
         >
           <input
@@ -180,8 +225,11 @@ export function Avaliacoes() {
             <p className='text-red-500'>{errors.descricao.message}</p>
           )}
 
-          <button className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'>
-            Enviar
+          <button
+            type='submit'
+            className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'
+          >
+            {editarComentario ? 'Atualizar' : 'Enviar'}
           </button>
         </form>
       </article>
