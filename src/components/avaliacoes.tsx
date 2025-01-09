@@ -195,7 +195,9 @@ export function Avaliacoes() {
 
       <article className='flex flex-col items-center'>
         <h2 className='mt-10 text-xl font-semibold mb-3 text-center'>
-          Deixe seu comentário
+          {editarComentario
+            ? ' Atualize seu comentário'
+            : ' Deixe seu comentário'}
         </h2>
 
         <form
