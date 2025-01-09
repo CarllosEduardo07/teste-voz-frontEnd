@@ -3,7 +3,7 @@ import logo from '../../assets/logo.png';
 
 export default function NavBar() {
   return (
-    <div className="bg-[url('./assets/background1.png')] mb-4 w-full md:h-screen bg-cover bg-bottom xl:bg-center bg-no-repeat clip-bottom-arc">
+    <div className="bg-[url('./assets/background11.png')] mb-4 w-full md:h-screen bg-cover bg-bottom xl:bg-center bg-no-repeat clip-bottom-arc">
       <nav className='py-4 flex flex-col items-center md:flex md:flex-row md:items-center justify-around text-white bg-transparent '>
         <img
           src={logo}
