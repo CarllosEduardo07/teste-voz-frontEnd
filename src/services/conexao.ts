@@ -27,7 +27,7 @@ export const updateComentarios = async (
   return response.data;
 };
 
-export const deleteComentarios = async (id: number) => {
+export const deleteComentarios = async (id: string) => {
   try {
     const response = await api.delete(`/comentarios/${id}`);
     return response.data;

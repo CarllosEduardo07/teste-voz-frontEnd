@@ -32,7 +32,12 @@ export const ApagarPostAlert = forwardRef<
           type='button'
           className='px-2 py-1 w-full flex items-center gap-2 cursor-pointer hover:bg-slate-100 rounded-sm mt-2'
         >
-          <Trash2 strokeWidth={1.3} size={17} absoluteStrokeWidth className='text-red-600' />
+          <Trash2
+            strokeWidth={1.3}
+            size={17}
+            absoluteStrokeWidth
+            className='text-red-600'
+          />
           <span className='text-sm text-red-600'>Excluir</span>
         </button>
       </AlertDialogTrigger>

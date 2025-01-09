@@ -19,7 +19,11 @@ import {
   newComentarioData,
   newComentarioSchema,
 } from '@/interface/ComentariosInterface';
-import { createComentarios, getComentarios } from '@/services/conexao';
+import {
+  createComentarios,
+  deleteComentarios,
+  getComentarios,
+} from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FilePenLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -53,7 +57,30 @@ export function Avaliacoes() {
       //enviando comentario para o jsonserver
       setComentarios(prevComentario => [...prevComentario, newComentario]);
       reset();
-    } catch (error) {}
+      console.log(`Comentário criado com sucesso!`);
+    } catch (error) {
+      console.log(`Erro Ao criar o comentario`, error);
+    }
+  };
+
+  //delete comentario
+  const handleDelete = async (id?: string) => {
+    if (!id) {
+      console.error('ID do comentário não está definido.');
+      return;
+    }
+
+    try {
+      await deleteComentarios(id);
+
+      //atualizar a lista depois que o comentario for removido
+      setComentarios(prevComentarios =>
+        prevComentarios.filter(comentario => comentario.id !== id),
+      );
+      console.log(`Comentário com id ${id} deletado com sucesso!`);
+    } catch (error) {
+      console.error('Erro ao deletar o comentário:', error);
+    }
   };
 
   useEffect(() => {
@@ -100,7 +127,7 @@ export function Avaliacoes() {
                         <DropdownMenuItem asChild>
                           {/* passando a função para outro componente */}
                           <ApagarPostAlert
-                            onDelete={() => deletarPost(post.id)}
+                            onDelete={() => handleDelete(comentario.id)}
                           />
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
