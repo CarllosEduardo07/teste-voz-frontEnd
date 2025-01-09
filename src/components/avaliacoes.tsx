@@ -225,12 +225,25 @@ export function Avaliacoes() {
             <p className='text-red-500'>{errors.descricao.message}</p>
           )}
 
-          <button
-            type='submit'
-            className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'
-          >
-            {editarComentario ? 'Atualizar' : 'Enviar'}
-          </button>
+          <div className='flex space-x-4'>
+            <button
+              type='button'
+              onClick={() => {
+                setEditarComentario(null);
+                reset();
+              }}
+              className='w-28 py-2 px-4 rounded-lg font-semibold bg-white text-black hover:bg-zinc-200 border border-zinc-300'
+            >
+              Cancelar
+            </button>
+
+            <button
+              type='submit'
+              className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'
+            >
+              {editarComentario ? 'Atualizar' : 'Enviar'}
+            </button>
+          </div>
         </form>
       </article>
     </section>
