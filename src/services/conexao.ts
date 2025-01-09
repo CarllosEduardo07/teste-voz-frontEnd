@@ -1,23 +1,25 @@
-import { ComentarioInterface } from '@/interface/ComentariosInterface';
+import { newComentarioData } from '@/interface/ComentariosInterface';
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
 });
 
-export const getComentarios = async () => {
+export const getComentarios = async (): Promise<newComentarioData[]> => {
   const response = await api.get('/comentarios');
   return response.data;
 };
 
-export const createComentarios = async (newComentario: ComentarioInterface) => {
+export const createComentarios = async (
+  newComentario: newComentarioData,
+): Promise<newComentarioData> => {
   const response = await api.post('/comentarios', newComentario);
   return response.data;
 };
 
 export const updateComentarios = async (
-  updateComentario: ComentarioInterface,
-) => {
+  updateComentario: newComentarioData,
+): Promise<newComentarioData> => {
   const response = await api.put(
     `/comentarios/${updateComentario.id}`,
     updateComentario,

@@ -6,24 +6,44 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { newComentarioSchema } from '@/interface/ComentariosInterface';
-import { getComentarios } from '@/services/conexao';
+import {
+  newComentarioData,
+  newComentarioSchema,
+} from '@/interface/ComentariosInterface';
+import { createComentarios, getComentarios } from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-
-type newComentarioData = z.infer<typeof newComentarioSchema>;
 
 export function Avaliacoes() {
   const [comentarios, setComentarios] = useState<newComentarioData[]>([]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<newComentarioData>({
     resolver: zodResolver(newComentarioSchema),
+    mode: 'onChange',
   });
+
+  const handleCreateComentario = async (data: newComentarioData) => {
+    const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
+
+    try {
+      const response = await createComentarios(validatedData);
+
+      const newComentario: newComentarioData = {
+        nome: response.nome,
+        descricao: response.descricao,
+      };
+
+      //enviando comentario para o jsonserver
+      setComentarios(prevComentario => [...prevComentario, newComentario]);
+      reset();
+    } catch (error) {}
+  };
 
   useEffect(() => {
     const fetchListComentarios = async () => {
@@ -36,7 +56,7 @@ export function Avaliacoes() {
     };
 
     fetchListComentarios();
-  }, []);
+  }, [comentarios]);
 
   return (
     <section className='p-5'>
@@ -78,13 +98,14 @@ export function Avaliacoes() {
         </h2>
 
         <form
-          onSubmit={handleSubmit('')}
+          onSubmit={handleSubmit(handleCreateComentario)}
           className='flex flex-col items-end space-y-2'
         >
           <input
             type='text'
             placeholder='Digite seu Nome'
             className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg'
+            autoComplete='off'
             {...register('nome')}
           />
           {errors.nome && <p className='text-red-500'>{errors.nome.message}</p>}
@@ -93,7 +114,8 @@ export function Avaliacoes() {
             className='py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-16 max-h-28'
             rows={2}
             cols={50}
-            placeholder='Compartilhe sua experiência...'
+            placeholder='Descrição'
+            autoComplete='off'
             {...register('descricao')}
           />
           {errors.descricao && (

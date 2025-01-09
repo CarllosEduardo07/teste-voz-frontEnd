@@ -1,7 +1,11 @@
 import { z } from 'zod';
 
 export const newComentarioSchema = z.object({
-  id: z.number(),
-  nome: z.string(),
-  descricao: z.string().min(3, 'São Obrigatorio pelo menos 3 caracteres'),
+  id: z.string().uuid().optional(),
+  nome: z.string().min(3, 'O nome precisa ter no mínimo 3 caracteres.'),
+  descricao: z
+    .string()
+    .min(3, 'A descrição precisa ter no mínimo 3 caracteres.'),
 });
+
+export type newComentarioData = z.infer<typeof newComentarioSchema>;
