@@ -1,3 +1,4 @@
+import { ApagarPostAlert } from '@/components/apagarComentaioAlert';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -7,11 +8,20 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   newComentarioData,
   newComentarioSchema,
 } from '@/interface/ComentariosInterface';
 import { createComentarios, getComentarios } from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FilePenLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -28,6 +38,7 @@ export function Avaliacoes() {
     mode: 'onChange',
   });
 
+  //create comentario
   const handleCreateComentario = async (data: newComentarioData) => {
     const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
 
@@ -74,7 +85,27 @@ export function Avaliacoes() {
           <CarouselContent>
             {comentarios.map((comentario, index) => (
               <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/3'>
-                <Card className='rounded-3xl h-60'>
+                <Card className='rounded-3xl h-60 relative'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className='absolute top-4 right-4 flex items-center'>
+                      <FilePenLine size={18} className='text-gray-500' />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>Opções</DropdownMenuLabel>
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                          <FilePenLine />
+                          <span>Editar</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          {/* passando a função para outro componente */}
+                          <ApagarPostAlert
+                            onDelete={() => deletarPost(post.id)}
+                          />
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   <CardContent className='items-center justify-start p-6'>
                     <div className='text-xl font-semibold'>
                       <p>{comentario.nome}</p>
