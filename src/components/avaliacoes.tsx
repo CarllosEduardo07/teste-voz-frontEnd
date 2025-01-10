@@ -27,6 +27,7 @@ import {
 } from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FilePenLine } from 'lucide-react';
+
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -46,10 +47,8 @@ export function Avaliacoes() {
     mode: 'onChange',
   });
 
-
   //create comentario
   const handleCreateComentario = async (data: newComentarioData) => {
-    
     try {
       const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
       const response = await createComentarios(validatedData);
@@ -81,9 +80,9 @@ export function Avaliacoes() {
 
   const handleUpdateComentario = async (data: newComentarioData) => {
     if (!editarComentario?.id) {
-      console.log("erro no id" )
-      return
-    };
+      console.log('erro no id');
+      return;
+    }
 
     try {
       const updatedComentario = await updateComentarios({
@@ -184,7 +183,6 @@ export function Avaliacoes() {
                   </DropdownMenu>
                   <CardContent className='items-center justify-start p-6'>
                     <div className='text-xl font-semibold'>
-                      <p>ID: {comentario.id}</p>
                       <p>{comentario.nome}</p>
                     </div>
                     <div className='py-2 pr-5 text-justify text-sm text-slate-600 font-medium break-words whitespace-normal overflow-y-auto max-h-40'>
@@ -213,7 +211,6 @@ export function Avaliacoes() {
           )}
           className='flex flex-col items-end space-y-2'
         >
-          <input type="hidden" {...register('id')} className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg' placeholder='id'/>
           <input
             type='text'
             placeholder='Digite seu Nome'
