@@ -1,4 +1,4 @@
-import { ApagarPostAlert } from '@/components/apagarComentaioAlert';
+import { DeleteCommentAlert } from '@/components/deleteCommentAlert';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -15,15 +15,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { newCommentData, newCommentSchema } from '@/interface/newCommentSchema';
 import {
-  newComentarioData,
-  newComentarioSchema,
-} from '@/interface/ComentariosInterface';
-import {
-  createComentarios,
-  deleteComentarios,
-  getComentarios,
-  updateComentarios,
+  createComment,
+  deleteComment,
+  getComments,
+  updateComment,
 } from '@/services/conexao';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FilePenLine } from 'lucide-react';
@@ -31,10 +28,9 @@ import { FilePenLine } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export function Avaliacoes() {
-  const [comentarios, setComentarios] = useState<newComentarioData[]>([]);
-  const [editarComentario, setEditarComentario] =
-    useState<newComentarioData | null>(null);
+export function Reviews() {
+  const [comments, setComments] = useState<newCommentData[]>([]);
+  const [editComment, setEditComment] = useState<newCommentData | null>(null);
 
   const {
     register,
@@ -42,25 +38,25 @@ export function Avaliacoes() {
     formState: { errors },
     reset,
     setValue,
-  } = useForm<newComentarioData>({
-    resolver: zodResolver(newComentarioSchema),
+  } = useForm<newCommentData>({
+    resolver: zodResolver(newCommentSchema),
     mode: 'onChange',
   });
 
   //create comentario
-  const handleCreateComentario = async (data: newComentarioData) => {
+  const handleCreateComment = async (data: newCommentData) => {
     try {
-      const validatedData = newComentarioSchema.parse(data); // Valida os dados usando Zod
-      const response = await createComentarios(validatedData);
+      const validatedData = newCommentSchema.parse(data); // Valida os dados usando Zod
+      const response = await createComment(validatedData);
 
-      const newComentario: newComentarioData = {
+      const newComment: newCommentData = {
         id: response.id,
         nome: response.nome,
         descricao: response.descricao,
       };
 
-      //enviando comentario para o jsonserver
-      setComentarios(prevComentario => [...prevComentario, newComentario]);
+      //enviando e atualizando o comentario para o jsonserver
+      setComments(prevComment => [...prevComment, newComment]);
       reset();
       console.log(`Comentário criado com sucesso!`);
     } catch (error) {
@@ -68,36 +64,33 @@ export function Avaliacoes() {
     }
   };
 
-  // Editar comentario
-  //Função para iniciar a edição
-  const handleEditaComentario = (comentario: newComentarioData) => {
-    setEditarComentario(comentario);
+  // Editar comentario: iniciar a edição
+  const handleEditComment = (comentario: newCommentData) => {
+    setEditComment(comentario);
     // Atualiza os campos manualmente
     setValue('id', comentario.id);
     setValue('nome', comentario.nome);
     setValue('descricao', comentario.descricao);
   };
 
-  const handleUpdateComentario = async (data: newComentarioData) => {
-    if (!editarComentario?.id) {
+  const handleUpdateComment = async (data: newCommentData) => {
+    if (!editComment?.id) {
       console.log('erro no id');
       return;
     }
 
     try {
-      const updatedComentario = await updateComentarios({
-        ...editarComentario,
+      const updatedComment = await updateComment({
+        ...editComment,
         ...data,
       });
 
-      setComentarios(prevComentarios =>
-        prevComentarios.map(comentario =>
-          comentario.id === updatedComentario.id
-            ? updatedComentario
-            : comentario,
+      setComments(prevComments =>
+        prevComments.map(comentario =>
+          comentario.id === updatedComment.id ? updatedComment : comentario,
         ),
       );
-      setEditarComentario(null); // Finaliza a edição
+      setEditComment(null); // Finaliza a edição
       reset();
       console.log(`Comentário atualizado com sucesso!`);
     } catch (error) {
@@ -113,11 +106,11 @@ export function Avaliacoes() {
     }
 
     try {
-      await deleteComentarios(id);
+      await deleteComment(id);
 
       //atualizar a lista depois que o comentario for removido
-      setComentarios(prevComentarios =>
-        prevComentarios.filter(comentario => comentario.id !== id),
+      setComments(prevComments =>
+        prevComments.filter(comentario => comentario.id !== id),
       );
       console.log(`Comentário com id ${id} deletado com sucesso!`);
     } catch (error) {
@@ -126,12 +119,12 @@ export function Avaliacoes() {
   };
 
   useEffect(() => {
-    const fetchListComentarios = async () => {
+    const fetchListComments = async () => {
       try {
-        const fetchedComentarios = await getComentarios();
-        setComentarios(fetchedComentarios);
+        const fetchedComments = await getComments();
+        setComments(fetchedComments);
 
-        if (!editarComentario) {
+        if (!editComment) {
           reset();
         }
       } catch (error) {
@@ -139,8 +132,8 @@ export function Avaliacoes() {
       }
     };
 
-    fetchListComentarios();
-  }, [editarComentario, reset]);
+    fetchListComments();
+  }, [editComment, reset]);
 
   return (
     <section className='p-5'>
@@ -156,7 +149,7 @@ export function Avaliacoes() {
           className='w-full max-w-4xl mx-auto'
         >
           <CarouselContent>
-            {comentarios.map((comentario, index) => (
+            {comments.map((comment, index) => (
               <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/3'>
                 <Card className='rounded-3xl h-60 relative'>
                   <DropdownMenu>
@@ -167,15 +160,15 @@ export function Avaliacoes() {
                       <DropdownMenuLabel>Opções</DropdownMenuLabel>
                       <DropdownMenuGroup>
                         <DropdownMenuItem
-                          onClick={() => handleEditaComentario(comentario)}
+                          onClick={() => handleEditComment(comment)}
                         >
                           <FilePenLine />
                           <span>Editar</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          {/* passando a função para outro componente */}
-                          <ApagarPostAlert
-                            onDelete={() => handleDelete(comentario.id)}
+                          {/* passando a função para outro componente para deletar */}
+                          <DeleteCommentAlert
+                            onDelete={() => handleDelete(comment.id)}
                           />
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
@@ -183,10 +176,10 @@ export function Avaliacoes() {
                   </DropdownMenu>
                   <CardContent className='items-center justify-start p-6'>
                     <div className='text-xl font-semibold'>
-                      <p>{comentario.nome}</p>
+                      <p>{comment.nome}</p>
                     </div>
                     <div className='py-2 pr-5 text-justify text-sm text-slate-600 font-medium break-words whitespace-normal overflow-y-auto max-h-40'>
-                      {comentario.descricao}
+                      {comment.descricao}
                     </div>
                   </CardContent>
                 </Card>
@@ -200,14 +193,12 @@ export function Avaliacoes() {
 
       <article className='flex flex-col items-center'>
         <h2 className='mt-10 text-xl font-semibold mb-3 text-center'>
-          {editarComentario
-            ? ' Atualize seu comentário'
-            : ' Deixe seu comentário'}
+          {editComment ? ' Atualize seu comentário' : ' Deixe seu comentário'}
         </h2>
 
         <form
           onSubmit={handleSubmit(
-            editarComentario ? handleUpdateComentario : handleCreateComentario,
+            editComment ? handleUpdateComment : handleCreateComment,
           )}
           className='flex flex-col items-end space-y-2'
         >
@@ -236,7 +227,7 @@ export function Avaliacoes() {
             <button
               type='button'
               onClick={() => {
-                setEditarComentario(null);
+                setEditComment(null);
                 reset();
               }}
               className='w-28 py-2 px-4 rounded-lg font-semibold bg-white text-black hover:bg-zinc-200 border border-zinc-300'
@@ -248,7 +239,7 @@ export function Avaliacoes() {
               type='submit'
               className='w-28 py-2 px-4 rounded-lg font-semibold bg-zinc-900 text-white hover:bg-zinc-700'
             >
-              {editarComentario ? 'Atualizar' : 'Enviar'}
+              {editComment ? 'Atualizar' : 'Enviar'}
             </button>
           </div>
         </form>

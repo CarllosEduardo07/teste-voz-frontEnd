@@ -12,17 +12,15 @@ import {
   AlertDialogTrigger,
 } from './ui/alert-dialog';
 
-interface ApagarPostAlertProps {
+interface DeleteCommentAlertProps {
   onDelete: VoidFunction;
 }
-//OBS: para usar a biblioteca shadcn-ui dentro de 2 componente que sao,
-//dropdowMenu e alert dialog, voce precisa transforma o componente em uma constante e exportar passando o paramentro (ref).
-export const ApagarPostAlert = forwardRef<
+export const DeleteCommentAlert = forwardRef<
   HTMLButtonElement,
-  ApagarPostAlertProps
+  DeleteCommentAlertProps
 >(({ onDelete }: any, ref) => {
   const handleDelete = () => {
-    onDelete(); // Chama a função de deletar
+    onDelete();
   };
 
   return (
