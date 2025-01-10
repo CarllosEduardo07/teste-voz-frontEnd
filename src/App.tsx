@@ -1,12 +1,12 @@
 import { Reviews } from '@/page/home/reviews';
 import Carrossel from './page/home/carrossel';
 import Footer from './page/home/footer';
-import NavBar from './page/home/navbar';
+import Header from './page/home/header';
 
 export default function App() {
   return (
     <div>
-      <NavBar />
+      <Header />
       <Carrossel />
       <Reviews />
       <Footer />
