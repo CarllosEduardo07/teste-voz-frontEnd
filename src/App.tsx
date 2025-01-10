@@ -1,7 +1,7 @@
-import { Avaliacoes } from '@/components/avaliacoes';
-import Carrossel from './components/carrossel/carrossel';
-import Footer from './components/footer/footer';
-import NavBar from './components/header/navbar';
+import { Avaliacoes } from '@/page/home/avaliacoes';
+import Carrossel from './page/home/carrossel';
+import Footer from './page/home/footer';
+import NavBar from './page/home/navbar';
 
 export default function App() {
   return (
