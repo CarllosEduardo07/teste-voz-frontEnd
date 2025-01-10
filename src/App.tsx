@@ -5,7 +5,7 @@ import Header from './page/home/header';
 
 export default function App() {
   return (
-    <div>
+    <div className='bg-[#EBEFF2]'>
       <Header />
       <Carrossel />
       <Reviews />

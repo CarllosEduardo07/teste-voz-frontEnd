@@ -31,8 +31,8 @@ export default function Carrossel() {
           {images.map((image, index) => (
             <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/3'>
               <div className='p-1'>
-                <Card>
-                  <CardContent className='aspect-square items-center justify-start'>
+                <Card className='rounded-3xl'>
+                  <CardContent className='bg-[#EBEFF2] aspect-square items-center justify-start border border-[#1D2527] rounded-3xl'>
                     <div className='flex justify-center'>
                       <img
                         src={image}

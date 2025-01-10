@@ -68,7 +68,7 @@ export function Reviews() {
   };
 
   // Editar comentario: iniciar a edição
-  const handleEditComment = (comentario: newCommentData) => {
+  const startEditingComment = (comentario: newCommentData) => {
     setEditComment(comentario);
     // Atualiza os campos manualmente
     setValue('id', comentario.id);
@@ -87,6 +87,7 @@ export function Reviews() {
         ...editComment,
         ...data,
       });
+      console.log(updatedComment);
 
       setComments(prevComments =>
         prevComments.map(comentario =>
@@ -165,7 +166,7 @@ export function Reviews() {
                       <DropdownMenuLabel>Opções</DropdownMenuLabel>
                       <DropdownMenuGroup>
                         <DropdownMenuItem
-                          onClick={() => handleEditComment(comment)}
+                          onClick={() => startEditingComment(comment)}
                         >
                           <FilePenLine />
                           <span>Editar</span>
