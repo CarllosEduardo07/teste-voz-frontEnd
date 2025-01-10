@@ -1,4 +1,5 @@
 import { DeleteCommentAlert } from '@/components/deleteCommentAlert';
+import { notify } from '@/components/notify';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -27,6 +28,7 @@ import { FilePenLine } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { ToastContainer } from 'react-toastify';
 
 export function Reviews() {
   const [comments, setComments] = useState<newCommentData[]>([]);
@@ -58,9 +60,10 @@ export function Reviews() {
       //enviando e atualizando o comentario para o jsonserver
       setComments(prevComment => [...prevComment, newComment]);
       reset();
-      console.log(`Comentário criado com sucesso!`);
+      notify('Comentário criado com sucesso!', 'success');
     } catch (error) {
-      console.log(`Erro Ao criar o comentario`, error);
+      console.log('Erro Ao criar o comentario', error);
+      notify('Erro Ao criar o comentario', 'error');
     }
   };
 
@@ -75,7 +78,7 @@ export function Reviews() {
 
   const handleUpdateComment = async (data: newCommentData) => {
     if (!editComment?.id) {
-      console.log('erro no id');
+      notify('Erro ao identificar o comentário para atualização.', 'error');
       return;
     }
 
@@ -92,16 +95,17 @@ export function Reviews() {
       );
       setEditComment(null); // Finaliza a edição
       reset();
-      console.log(`Comentário atualizado com sucesso!`);
+      notify(`Comentário atualizado com sucesso!`, 'info');
     } catch (error) {
-      console.error(`Erro ao atualizar o comentário:`, error);
+      console.error('Erro ao atualizar o comentário:', error);
+      notify('Erro ao atualizar o comentário:', 'error');
     }
   };
 
   //delete comentario
   const handleDelete = async (id?: string) => {
     if (!id) {
-      console.error('ID do comentário não está definido.');
+      notify('Erro ao identificar o comentário para exclusão.', 'error');
       return;
     }
 
@@ -112,9 +116,10 @@ export function Reviews() {
       setComments(prevComments =>
         prevComments.filter(comentario => comentario.id !== id),
       );
-      console.log(`Comentário com id ${id} deletado com sucesso!`);
+      notify('Comentário deletado com sucesso!', 'warning');
     } catch (error) {
       console.error('Erro ao deletar o comentário:', error);
+      notify('Erro ao deletar o comentário:', 'error');
     }
   };
 
@@ -242,6 +247,7 @@ export function Reviews() {
               {editComment ? 'Atualizar' : 'Enviar'}
             </button>
           </div>
+          <ToastContainer />
         </form>
       </article>
     </section>
