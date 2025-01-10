@@ -25,7 +25,7 @@ export default function Carrossel() {
         opts={{
           align: 'start',
         }}
-        className='w-full max-w-4xl mx-auto'
+        className='w-full max-w-[250px] md:max-w-xl lg:max-w-4xl mx-auto'
       >
         <CarouselContent>
           {images.map((image, index) => (

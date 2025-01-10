@@ -82,7 +82,7 @@ export default function Header() {
           </li>
         </div>
       </div>
-      <div className="bg-[url('./assets/background11.png')] mb-4 w-full h-[350px] md:h-screen bg-cover bg-bottom xl:bg-center bg-no-repeat clip-bottom-arc z-10"></div>
+      <div className="bg-[url('./assets/background11.png')] mb-4 w-full h-[350px] md:h-screen bg-cover bg-center bg-no-repeat clip-bottom-arc z-10"></div>
     </div>
   );
 }

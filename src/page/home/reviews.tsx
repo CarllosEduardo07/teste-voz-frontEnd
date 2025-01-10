@@ -151,7 +151,7 @@ export function Reviews() {
           opts={{
             align: 'start',
           }}
-          className='w-full max-w-4xl mx-auto'
+          className='w-full max-w-[250px] md:max-w-xl lg:max-w-4xl mx-auto'
         >
           <CarouselContent>
             {comments.map((comment, index) => (
@@ -205,19 +205,19 @@ export function Reviews() {
           onSubmit={handleSubmit(
             editComment ? handleUpdateComment : handleCreateComment,
           )}
-          className='flex flex-col items-end space-y-2'
+          className='flex flex-col items-center space-y-2'
         >
           <input
             type='text'
             placeholder='Digite seu Nome'
-            className='w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg'
+            className='w-[80%] md:w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg'
             autoComplete='off'
             {...register('nome')}
           />
           {errors.nome && <p className='text-red-500'>{errors.nome.message}</p>}
 
           <textarea
-            className='py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-16 max-h-28'
+            className='w-[80%] md:w-full py-1.5 px-2 border-2 border-zinc-400 rounded-lg min-h-16 max-h-28'
             rows={2}
             cols={50}
             placeholder='Descrição'
@@ -228,7 +228,7 @@ export function Reviews() {
             <p className='text-red-500'>{errors.descricao.message}</p>
           )}
 
-          <div className='flex space-x-4'>
+          <div className='w-[80%]  flex space-x-4 justify-end'>
             <button
               type='button'
               onClick={() => {
