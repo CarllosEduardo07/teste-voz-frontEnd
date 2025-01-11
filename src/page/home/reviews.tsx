@@ -229,7 +229,7 @@ export function Reviews() {
             <p className='text-red-500'>{errors.descricao.message}</p>
           )}
 
-          <div className='w-[80%]  flex space-x-4 justify-end'>
+          <div className='w-[80%] md:w-full flex space-x-4 justify-end'>
             <button
               type='button'
               onClick={() => {
