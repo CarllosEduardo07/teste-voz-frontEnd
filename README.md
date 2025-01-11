@@ -33,7 +33,7 @@ Este repositório faz parte do teste para a vaga de Desenvolvedor Front-End no G
 
 O layout da aplicação está disponível no Figma. Acesse-o pelo link abaixo e siga o design proposto o mais fielmente possível.
 
-[🔗 Link para o Figma](https://www.figma.com/design/YqufsjX9hR7Qzk9mM359fH/Teste-Motoca-Systems?node-id=0-1&t=cMNbEIgJ2wKOufTm-1)
+[🔗 Link para o Figma](https://www.figma.com/design/y78lfB8J1BRFh723tusguL/Teste-SCS?node-id=0-1&node-type=canvas&t=jonMXuYQP6LdAa6K-0)
 
 <h2 id="clonagem">Clonagem</h2>
 
