@@ -62,8 +62,8 @@ export function Reviews() {
       reset();
       notify('Comentário criado com sucesso!', 'success');
     } catch (error) {
-      console.log('Erro Ao criar o comentario', error);
-      notify('Erro Ao criar o comentario', 'error');
+      console.log('Erro ao criar o comentário !', error);
+      notify('Erro ao criar o comentario!', 'error');
     }
   };
 
@@ -77,43 +77,28 @@ export function Reviews() {
   };
 
   const handleUpdateComment = async (data: newCommentData) => {
-    if (!editComment?.id) {
-      notify('Erro ao identificar o comentário para atualização.', 'error');
-      return;
-    }
-
     try {
-      const updatedComment = await updateComment({
-        ...editComment,
-        ...data,
-      });
-      console.log(updatedComment);
+      const updatedComment = await updateComment(data);
 
       setComments(prevComments =>
         prevComments.map(comentario =>
           comentario.id === updatedComment.id ? updatedComment : comentario,
         ),
       );
-      setEditComment(null); // Finaliza a edição
+      setEditComment(null); // finaliza a edição
       reset();
       notify(`Comentário atualizado com sucesso!`, 'info');
     } catch (error) {
       console.error('Erro ao atualizar o comentário:', error);
-      notify('Erro ao atualizar o comentário:', 'error');
+      notify('Erro ao atualizar o comentário!', 'error');
     }
   };
 
   //delete comentario
-  const handleDelete = async (id?: string) => {
-    if (!id) {
-      notify('Erro ao identificar o comentário para exclusão.', 'error');
-      return;
-    }
-
+  const handleDelete = async (id: string) => {
     try {
       await deleteComment(id);
 
-      //atualizar a lista depois que o comentario for removido
       setComments(prevComments =>
         prevComments.filter(comentario => comentario.id !== id),
       );
@@ -128,18 +113,15 @@ export function Reviews() {
     const fetchListComments = async () => {
       try {
         const fetchedComments = await getComments();
-        setComments(fetchedComments);
 
-        if (!editComment) {
-          reset();
-        }
+        setComments(fetchedComments);
       } catch (error) {
-        console.log('Erro ao pega os dados', error);
+        console.log('Erro ao lista os dados!', error);
       }
     };
 
     fetchListComments();
-  }, [editComment, reset]);
+  }, [editComment]);
 
   return (
     <section className='p-5'>
@@ -233,7 +215,6 @@ export function Reviews() {
             <button
               type='button'
               onClick={() => {
-                setEditComment(null);
                 reset();
               }}
               className='w-28 py-2 px-4 rounded-lg font-semibold bg-white text-black hover:bg-zinc-200 border border-zinc-300'
