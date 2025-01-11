@@ -65,6 +65,8 @@ pnpm install
 
 Para executar o **Projeto** e o **JSON Server**, siga os passos abaixo:
 
+> <h3><strong>IMPORTANTE</strong>: Certifique-se de que o servidor do JsonServer está em execução para o funcionamento completo da aplicação.</h3>
+
 1. Abra um terminal para executar o projeto e utilize o comando:
    ```bash
    npm run dev
@@ -76,7 +78,6 @@ Para executar o **Projeto** e o **JSON Server**, siga os passos abaixo:
   npm run server
   ```
 
-> <h3><strong>IMPORTANTE</strong>: Certifique-se de que o servidor do JsonServer está em execução para o funcionamento completo da aplicação.</h3>
 
 <h2 id="tecnologias-utilizadas">🚀 Tecnologias Utilizadas</h2>
 
