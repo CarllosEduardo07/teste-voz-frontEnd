@@ -1,6 +1,7 @@
 <h1 align="center" style="font-weight: bold;"> 📝 Teste VOZ - Desenvolvedor Front-End</h1>
 <p align="center">
  <a href="#descricao">Descrição</a> • 
+ <a href="#layout">Layout</a> • 
  <a href="#clonagem">Clonagem</a> • 
   <a href="#instalacao">Instrução para Instalação</a> •
   <a href="#uso">Instruções de Uso</a> •
@@ -16,32 +17,32 @@
 
 </div>
 
-<h1 align="center" style="font-weight: bold;"> 🎯 Imagem do Desafio Concluido</h1>
+<h1 align="center" style="font-weight: bold;"> 📷 Imagem do Projeto Concluído</h1>
 
 ![desario](https://github.com/user-attachments/assets/1d4be0d4-1ea5-46e8-a6e3-37696e60b8b5)
 
-
-
 <h2 id="descricao">📌 Descrição</h2>
+Este repositório faz parte do teste para a vaga de Desenvolvedor Front-End no Grupo VOZ. O desafio consiste em criar uma landing page com base em um modelo fornecido no Figma, além de implementar um CRUD. Neste projeto, foi desenvolvido um CRUD de comentários.
 
-Teste para a vaga Front end do Grupo VOZ. Esse projeto foi feito em **React** com **Vite**.
-<br>
+O projeto foi construído utilizando <strong>React</strong> com <strong>Vite</strong>.
 
-O desafio do projeto foi fazer uma Landing page do modelo proposto.
-<br>
+<h2 id="layout">🎨 Layout</h2>
+
+O layout da aplicação está disponível no Figma. Acesse-o pelo link abaixo e siga o design proposto o mais fielmente possível.
+
+[🔗 Link para o Figma](https://www.figma.com/design/YqufsjX9hR7Qzk9mM359fH/Teste-Motoca-Systems?node-id=0-1&t=cMNbEIgJ2wKOufTm-1)
 
 <h2 id="clonagem">Clonagem</h2>
 
-Como clonar esse projeto
+Para clonar este repositório, execute o comando abaixo no terminal:
 
 ```bash
-git clone https://github.com/CarllosEduardo07/desafio-vaga-frontend-scs-2024.git
+git clone https://github.com/CarllosEduardo07/teste-voz-frontEnd.git
 ```
 
 <h2 id="instalacao">📋 Instrução para Instalação</h2>
 
-Para **instalar as Dependências**
-<br>
+### Instalar as Dependências
 
 - **Importante:** utilize o comando apropriado de acordo com o gerenciador de pacotes que você utiliza.
 
@@ -59,15 +60,20 @@ pnpm install
 
 <h2 id="uso">📋 Instruções de uso</h2>
 
-Pra Executar o **Projeto**
+Para executar o **Projeto** e o **JSON Server**, siga os passos abaixo:
 
-```bash
-npm run dev
-```
+1. Abra um terminal para executar o projeto e utilize o comando:
+   ```bash
+   npm run dev
+   ```
 
-**IMPORTANTE:** Execute o servidor para a aplicação funcionar
+- 2º Em outro terminal, execute o servidor(Json-server) utilizando o comando::
 
-<br>
+  ```bash
+  npm run server
+  ```
+
+> <h3><strong>IMPORTANTE</strong>: Certifique-se de que o servidor do JsonServer está em execução para o funcionamento completo da aplicação.</h3>
 
 <h2 id="tecnologias-utilizadas">🚀 Tecnologias Utilizadas</h2>
 
