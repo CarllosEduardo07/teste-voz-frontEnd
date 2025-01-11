@@ -19,12 +19,15 @@
 
 <h1 align="center" style="font-weight: bold;"> 📷 Imagem do Projeto Concluído</h1>
 
-![desario](https://github.com/user-attachments/assets/1d4be0d4-1ea5-46e8-a6e3-37696e60b8b5)
+![desafio](https://github.com/user-attachments/assets/90f660ac-fba9-40f1-8181-abf4630a2501)
+
 
 <h2 id="descricao">📌 Descrição</h2>
-Este repositório faz parte do teste para a vaga de Desenvolvedor Front-End no Grupo VOZ. O desafio consiste em criar uma landing page com base em um modelo fornecido no Figma, além de implementar um CRUD. Neste projeto, foi desenvolvido um CRUD de comentários.
+Este repositório faz parte do teste para a vaga de Desenvolvedor Front-End no Grupo VOZ. O desafio consiste em criar uma landing page com base em um modelo fornecido no Figma, além de implementar um CRUD. Neste projeto, foi desenvolvido um CRUD de comentários. 
 
-O projeto foi construído utilizando <strong>React</strong> com <strong>Vite</strong>.
+- <strong>Responsividade</strong>: O projeto tem suporte à responsividade para <strong>Computadores</strong>, <strong>Tablets</strong> e <strong>Celulares</strong>.
+
+> O projeto foi construído utilizando <strong>React</strong> com <strong>Vite</strong>.
 
 <h2 id="layout">🎨 Layout</h2>
 
